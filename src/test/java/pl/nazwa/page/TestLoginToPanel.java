@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class TestLogintoPanel {
+public class TestLoginToPanel {
 
     private WebDriver driver;
 
@@ -38,30 +38,24 @@ public class TestLogintoPanel {
         // When
         // Act
         loginPage.clickSubmitButton();
-        String failMessage = loginPage.getSubInfoNewText();
+        String failMessage = null;
+        try {
+            failMessage = loginPage.getSubInfoNewText();
+        }
+        catch(Exception e){
+            failMessage = e.getMessage();
+        }
         System.out.println("failMessage: " + failMessage);
         // Then
         // Assert
         assertThat("It does not contain " + "\'Nieprawidłowy login lub hasło\'", failMessage, containsString("Nieprawidłowy login lub hasło"));
-        // When
-        // Act
-//        exercise1Page.pressSolutionButton();
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        String trialText2 = exercise1Page.getTrialText();
-//        System.out.println("[trialText] = " + trialText2);
-        // Then
-        // Assert
-//        assertThat("Is does not contain " + "\'OK. Good answer\'", trialText2, containsString("OK. Good answer"));
         // Write to file
-//        FileMethod.writeToFile("TestExercise1: " + "ShouldThreeButtonsAction: " + "\n" +
-//                "trial : \'" + trialText + "\'\n" +
-//                "after press button 'Check Solution' trial: \'" + trialText2 + "\'" +
-//                ""
-//        );
+        FileMethod.writeToFile("shouldTryToLoginTests: " + "shouldTryToLoginTests: " + "\n" +
+                "Fill in login field : \'test.name\'\n" +
+                "Fill in password field : \'password\'\n" +
+                "After press button 'login' show: \'" + failMessage + "\'" +
+                ""
+        );
     }
 
     @After
